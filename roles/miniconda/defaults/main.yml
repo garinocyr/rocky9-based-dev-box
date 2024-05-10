@@ -1,0 +1,6 @@
+---
+# Defaults file for miniconda
+miniconda_python_version: "py312"
+miniconda_version: "24.3.0-0"
+miniconda_download_dest: "/tmp"
+miniconda_install_dest: "/opt/miniconda3"

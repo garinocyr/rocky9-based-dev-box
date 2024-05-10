@@ -1,0 +1,15 @@
+---
+- name: "VM setup"
+  hosts: "all"
+  become: true
+  pre_tasks:
+    - name: "Update and upgrade apt packages"
+      ansible.builtin.apt:
+        update_cache: "yes"
+        cache_valid_time: 86400 # One day
+        upgrade: "yes"
+  roles:
+    - git
+    - miniconda
+    - podman
+    - podman-compose

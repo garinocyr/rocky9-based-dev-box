@@ -1,0 +1,4 @@
+---
+# Vars file for miniconda
+miniconda_file: "Miniconda3-{{ miniconda_python_version }}_{{ miniconda_version }}-Linux-{{ ansible_architecture }}.sh"
+miniconda_url: "https://repo.anaconda.com/miniconda/{{ miniconda_file }}"

@@ -1,0 +1,6 @@
+---
+# Tasks for podman-compose
+- name: "Install podman-compose {{ podman_compose_version }}"
+  ansible.builtin.apt:
+    name: "podman-compose={{ podman_compose_version }}"
+    state: "present"

@@ -1,0 +1,31 @@
+---
+# Tasks file for miniconda
+- name: "Download miniconda"
+  ansible.builtin.get_url:
+    url: "{{ miniconda_url }}"
+    dest: "{{ miniconda_download_dest }}"
+  register: miniconda_download_miniconda
+  retries: 3
+  until: "miniconda_download_miniconda is succeeded"
+
+- name: "Install miniconda"
+  ansible.builtin.command: "bash {{ miniconda_download_dest }}/{{ miniconda_file }} -b -p {{ miniconda_install_dest }}"
+  args:
+    creates: "{{ miniconda_install_dest }}"
+
+- name: ".condarc skeleton in skel for future users profile creation"
+  ansible.builtin.template:
+    src: "condarc.j2"
+    dest: "/etc/skel/.condarc"
+
+- name: "Push .condarc configuration"
+  ansible.builtin.template:
+    src: "condarc.j2"
+    dest: "~/.condarc"
+    backup: "yes"
+  become_user: "vagrant"
+
+- name: "Enable miniconda for bash users"
+  ansible.builtin.template:
+    src: "profile-conda.sh.j2"
+    dest: "/etc/profile.d/zz-conda.sh"

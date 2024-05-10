@@ -1,0 +1,6 @@
+---
+# Tasks for git
+- name: "Install git {{ git_version }}"
+  ansible.builtin.apt:
+    name: "git={{ git_version }}"
+    state: "present"
