@@ -56,7 +56,7 @@
 ```sh
 > git clone https://github.com/garinocyr/debian-bookworm64-based-dev-box.git
 ```
-* Create a Vagrant-synced-folder.config.yml yaml file at the same location of the Vagrantfile file with content (given as an example):
+* Create a `Vagrant-synced-folder.config.yml` yaml file at the same location of the Vagrantfile file with content (given as an example):
 ```yaml
 host_path: "~/git/projects"
 guest_path: "/home/vagrant/projects"
