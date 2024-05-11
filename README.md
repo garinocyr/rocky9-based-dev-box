@@ -1,4 +1,4 @@
-# Vagrant box with Debian Bookworm64 for software development purpose
+# Vagrant box with Debian Bookworm64 for development purpose
 
 ## Description
 
@@ -11,6 +11,15 @@
 |:----------|:------------|
 |Provider   |VirtualBox   |
 |Provisioner|Ansible local|
+
+### VirtualBox provider features
+
+|Feature  |Value        |
+|:--------|:------------|
+|cpus     |2            |
+|memory   |1024 MB      |
+|vram     |128 MB       |
+|clipboard|bidirectional|
 
 ### Installed tools on guest
 
@@ -39,18 +48,40 @@
 * Install associated [VirtualBox Extension Pack 7.0.18](https://www.virtualbox.org/wiki/Downloads).
 * Install [Git client for Windows 2.45.0](https://git-scm.com/download/win).
 
-## Running the Vagrant box
+## Running the Vagrant box from a Windows console
 
-* From a Windows console, run:
+### First time
+
+* Run:
 ```sh
-> git clone https://github.com/garinocyr/vm-dev-on-debian-bookworm64.git
-> cd vm-dev-on-debian-bookworm64
+> git clone https://github.com/garinocyr/debian-bookworm64-based-dev-box.git
+```
+* Create a Vagrant-synced-folder.config.yml yaml file at the same location of the Vagrantfile file with content (given as an example):
+```yaml
+host_path: "~/git/projects"
+guest_path: "/home/vagrant/projects"
+```
+* Run:
+```sh
+> cd debian-bookworm64-based-dev-box
 > vagrant up
 ```
 
-* If you need to reprovision the box, run:
+### Next time
+
+* To start the box, run:
+```sh
+> vagrant up
+```
+
+* To reprovision the box, run:
 ```sh
 > vagrant up --provision
+```
+
+* To reload the box without stopping it, run:
+```sh
+> vagrant reload
 ```
 
 ## Connection to the Vagrant box with the `vagrant` user
@@ -67,7 +98,7 @@
 > vagrant halt
 ```
 
-## Danger zone
+## ⚠️ Danger zone
 
 ### Destroying the Vagrant box
 
@@ -78,8 +109,24 @@
 
 ## Known limitations
 
+### Vagrant box hangs after guest additions upgrade
+
+#### Description
+
 * After the guest has upgraded to the lastest guest additions, it hangs...
-  * You need to reboot it via sending a signal from VirtualBox Manager and then `vagrant up` from a Windows console.
-* At guest startup, there is the following error: 
+
+#### Resolution / Workaround
+
+* Send a shutdown signal from VirtualBox Manager.
+* `vagrant up` the Vagrant box from a Windows console.
+
+### Vagrant gathered an unknown ansible version and falls back on ... 1.8
+
+#### Description
+
+* At guest startup, there is the following error:
   * "Vagrant gathered an unknown ansible version and falls back on ... 1.8".
-  * No resolution so far, cf. https://github.com/hashicorp/vagrant/issues/13234.
+
+#### Resolution / Workaround
+
+* No resolution so far, cf. https://github.com/hashicorp/vagrant/issues/13234.
