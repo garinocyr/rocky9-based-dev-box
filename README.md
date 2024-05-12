@@ -3,7 +3,7 @@
 ## Description
 
 * Provides a Vagrant box based on [Debian Bookworm64](https://app.vagrantup.com/debian/boxes/bookworm64).
-* The box is run on a Windows 11 host.
+* The box is run on a Windows 11 host (one CPU 13th Gen Intel(R) Core(TM) i7-13650HX 2.60 GHz with 14 cores, 32 GB RAM).
 
 ### Features
 
@@ -47,14 +47,14 @@
 ### Install Vagrant `vbguest` plugin
 
 * The Vagrant `Debian Bookworm64` box comes with guest additions `6.0`. They need to be upgraded to version `7.0.18`. This is where the Vagrant `vbguest` comes in. It will detect higher installed guest additions (cf. `VirtualBox Extension Pack 7.0.18`) on host and will upgrade guest automatically at box startup time.
-* From a Windows console, run:
+* From a terminal, run:
 ```sh
 $ vagrant plugin install vagrant-vbguest
 ```
 
 ### Install [Git client for Windows 2.45.0](https://git-scm.com/download/win)
 
-## Running the Vagrant box from a Windows console
+## Running the Vagrant box from a terminal
 
 ### First time
 
@@ -98,7 +98,7 @@ $ vagrant reload
 ```sh
 $ vagrant ssh-config --host dev-box >> ~/.ssh/config
 ```
-* This will add the folling in the `ssh config` file
+* This will add the following in the .ssh `config` file:
 ```sh
 $ cat ~/.ssh/config
 Host dev-box
@@ -126,14 +126,14 @@ $ ssh vagrant@dev-box
 
 ### Alternative for other cases
 
-* From a Windows console, run:
+* From a terminal, run:
 ```sh
 $ vagrant ssh
 ```
 
 ## Stopping the Vagrant box
 
-* From a Windows console, run:
+* From a terminal, run:
 ```sh
 $ vagrant halt
 ```
@@ -142,7 +142,7 @@ $ vagrant halt
 
 ### Destroying the Vagrant box
 
-* From a Windows console, run:
+* From a terminal, run:
 ```sh
 $ vagrant destroy
 ```
@@ -158,7 +158,7 @@ $ vagrant destroy
 #### Resolution / Workaround
 
 * Send a shutdown signal from VirtualBox Manager.
-* `vagrant up` the Vagrant box from a Windows console.
+* `vagrant up` the Vagrant box from a terminal.
 
 ### Vagrant gathered an unknown ansible version and falls back on ... 1.8
 
