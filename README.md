@@ -23,12 +23,12 @@
 
 ### Installed tools on guest
 
-|Tool          |Version       |
-|:-------------|:-------------|
-|git           |1:2.39.2-1.1  |
-|miniconda     |24.3.0-0      |
-|podman        |4.3.1+ds1-8+b1|
-|podman-compose|1.0.3-3       |
+|Tool          |Version            |
+|:-------------|:------------------|
+|git           |1:2.39.2-1.1       |
+|miniconda     |24.3.0-0           |
+|podman        |4.3.1+ds1-8+deb12u1|
+|podman-compose|1.0.3-3            |
 
 ### Users on guest
 
@@ -46,7 +46,7 @@
 
 ### Install Vagrant `vbguest` plugin
 
-* The Vagrant `Debian Bookworm64` box comes with guest additions `6.0`. They need to be upgraded to version `7.0.18`. This is where the Vagrant `vbguest` comes in. It will detect higher installed guest additions (cf. `VirtualBox Extension Pack 7.0.18`) on host and will upgrade guest automatically at box startup time.
+* `vbguest` plugin will detect higher installed guest additions (cf. `VirtualBox Extension Pack 7.0.18`) on host and will upgrade guest automatically at box startup time.
 * From a terminal, run:
 ```sh
 $ vagrant plugin install vagrant-vbguest
@@ -72,6 +72,7 @@ guest_path: "/home/vagrant/projects"
 $ cd debian-bookworm64-based-dev-box
 $ vagrant up
 ```
+* The Vagrant `Debian Bookworm64` box comes with guest additions `6.0`. They will be upgraded to version `7.0.18` thanks to the `vbguest` plugin.
 
 ### Next time
 
