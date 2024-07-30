@@ -1,6 +1,6 @@
 ---
 # Tasks for podman
 - name: "Install podman {{ podman_version }}"
-  ansible.builtin.apt:
-    name: "podman={{ podman_version }}"
+  ansible.builtin.dnf:
+    name: "podman-{{ podman_version }}"
     state: "present"

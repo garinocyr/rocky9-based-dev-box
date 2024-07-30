@@ -1,8 +1,8 @@
-# Vagrant box with Debian Bookworm64 for development purpose
+# Vagrant box with Rocky9 for development purpose
 
 ## Description
 
-* Provides a Vagrant box based on [Debian Bookworm64](https://app.vagrantup.com/debian/boxes/bookworm64).
+* Provides a Vagrant box based on [Rocky9](https://app.vagrantup.com/rockylinux/boxes/9).
 * The box is run on a Windows 11 host (one CPU 13th Gen Intel(R) Core(TM) i7-13650HX 2.60 GHz with 14 cores, 32 GB RAM).
 
 ### Features
@@ -23,12 +23,12 @@
 
 ### Installed tools on guest
 
-|Tool          |Version       |
-|:-------------|:-------------|
-|git           |1:2.39.2-1.1  |
-|miniconda     |24.3.0-0      |
-|podman        |4.3.1+ds1-8+b1|
-|podman-compose|1.0.3-3       |
+|Tool          |Version         |
+|:-------------|:---------------|
+|git           |2.43.5-1.el9_4  |
+|miniconda     |24.3.0-0        |
+|podman        |4:4.9.4-6.el9_4 |
+|podman-compose|1.0.6-3.el9     |
 
 ### Users on guest
 
@@ -46,7 +46,7 @@
 
 ### Install Vagrant `vbguest` plugin
 
-* The Vagrant `Debian Bookworm64` box comes with guest additions `6.0`. They need to be upgraded to version `7.0.18`. This is where the Vagrant `vbguest` comes in. It will detect higher installed guest additions (cf. `VirtualBox Extension Pack 7.0.18`) on host and will upgrade guest automatically at box startup time.
+* `vbguest` plugin will detect higher installed guest additions (cf. `VirtualBox Extension Pack 7.0.18`) on host and will upgrade guest automatically at box startup time.
 * From a terminal, run:
 ```sh
 $ vagrant plugin install vagrant-vbguest
@@ -60,7 +60,7 @@ $ vagrant plugin install vagrant-vbguest
 
 * Run:
 ```sh
-$ git clone https://github.com/garinocyr/debian-bookworm64-based-dev-box.git
+$ git clone https://github.com/garinocyr/rocky9-based-dev-box.git
 ```
 * Create a `Vagrant-synced-folder.config.yml` yaml file at the same location of the Vagrantfile file with content (given as an example):
 ```yaml
@@ -69,9 +69,10 @@ guest_path: "/home/vagrant/projects"
 ```
 * Run:
 ```sh
-$ cd debian-bookworm64-based-dev-box
+$ cd rocky9-based-dev-box
 $ vagrant up
 ```
+* The Vagrant `Rocky9` box comes with guest additions `7.0.16`. They will not be upgraded to version `7.0.18` (cf. `Known limitations` / `No match for argument: kernel-devel-5.14.0-427.13.1.el9_4.x86_64` section).
 
 ### Next time
 
@@ -108,7 +109,7 @@ Host dev-box
   UserKnownHostsFile /dev/null
   StrictHostKeyChecking no
   PasswordAuthentication no
-  IdentityFile C:/Users/my_windows_user/git/vagrant/debian-bookworm64-based-dev-box/.vagrant/machines/default/virtualbox/private_key
+  IdentityFile C:/Users/my_windows_user/git/vagrant/rocky9-based-dev-box/.vagrant/machines/default/virtualbox/private_key
   IdentitiesOnly yes
   LogLevel FATAL
   PubkeyAcceptedKeyTypes +ssh-rsa
@@ -149,24 +150,34 @@ $ vagrant destroy
 
 ## Known limitations
 
-### Vagrant box hangs after guest additions upgrade
-
-#### Description
-
-* After the guest has upgraded to the lastest guest additions, it hangs...
-
-#### Resolution / Workaround
-
-* Send a shutdown signal from VirtualBox Manager.
-* `vagrant up` the Vagrant box from a terminal.
-
 ### Vagrant gathered an unknown ansible version and falls back on ... 1.8
 
 #### Description
 
 * At guest startup, there is the following error:
-  * "Vagrant gathered an unknown ansible version and falls back on ... 1.8".
+```sh
+...
+Vagrant gathered an unknown ansible version and falls back on ... 1.8
+...
+```
 
 #### Resolution / Workaround
 
 * No resolution so far, cf. https://github.com/hashicorp/vagrant/issues/13234.
+
+### No match for argument: kernel-devel-5.14.0-427.13.1.el9_4.x86_64
+
+#### Description
+
+* At guest startup, there is the following error:
+```sh
+...
+No match for argument: kernel-devel-5.14.0-427.13.1.el9_4.x86_64
+Error: Unable to find a match: kernel-devel-5.14.0-427.13.1.el9_4.x86_64
+...
+```
+
+#### Resolution / Workaround
+
+* No resolution so far.
+* The Vagrant `Rocky9` box guest additions upgrade to `7.0.18` is deactivated (cf `Vagrant` file / `config.vbguest.auto_update = false`).
